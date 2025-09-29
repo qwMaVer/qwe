@@ -25,7 +25,11 @@ function App() {
       fetch("http://localhost:3000/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: u.id, first_name: u.first_name, username: u.username }),
+        body: JSON.stringify({
+          id: u.id,
+          first_name: u.first_name,
+          username: u.username,
+        }),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -40,7 +44,6 @@ function App() {
       setLoading(false);
     }
   }, []);
-
 
   const spinWheel = () => {
     if (!user || user.balance < 10) {
@@ -64,42 +67,38 @@ function App() {
       });
   };
 
-  if (loading) return <p>Загрузка...</p>;
+  if (loading) return <p className="text-white text-xl text-center">Загрузка...</p>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Telegram MiniApp 🚀</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
+      <h1 className="text-4xl font-bold text-red-500 mb-6">
+        Проверка Tailwind 🚀
+      </h1>
 
       {user ? (
-        <div>
+        <div className="bg-gray-800 p-6 rounded-xl shadow-xl text-center">
           <p><b>ID:</b> {user.id}</p>
           <p><b>Имя:</b> {user.first_name}</p>
           <p><b>Баланс:</b> {user.balance} ⭐</p>
 
-          <button onClick={spinWheel} style={{ padding: "10px 20px", marginTop: 20 }}>
-            Крутить рулетку (10⭐)
+          <button
+            onClick={spinWheel}
+            className="mt-6 px-6 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg hover:scale-105 transition-transform"
+          >
+            🎰 Крутить рулетку (10⭐)
           </button>
 
           {result && (
-            <div style={{ marginTop: 20, fontSize: 20 }}>
+            <div className="mt-6 text-2xl font-semibold">
               🎯 Результат: {result}
             </div>
           )}
         </div>
       ) : (
-        <p>Открой меня внутри Telegram, чтобы увидеть свои данные</p>
+        <p>Открой MiniApp в Telegram, чтобы увидеть свои данные</p>
       )}
     </div>
   );
-  function App() {
-  return (
-    <div className="flex items-center justify-center h-screen bg-gray-900">
-      <h1 className="text-4xl text-red-500">
-        Проверка Tailwind 🚀
-      </h1>
-    </div>
-  );
-}
 }
 
 export default App;
