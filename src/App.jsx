@@ -29,7 +29,7 @@ function App() {
         .then((res) => res.json())
         .then((data) => {
           console.log("Ответ от backend:", data);
-          setUser(data); // теперь user = с балансом
+          setUser(data); // теперь user с балансом
           setLoading(false);
         })
         .catch((err) => {
@@ -45,21 +45,47 @@ function App() {
   if (loading) return <p>Загрузка...</p>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Telegram MiniApp 🚀</h1>
+  <div style={{ padding: 20 }}>
+    <h1>Telegram MiniApp 🚀</h1>
 
-      {user ? (
-        <div>
-          <p><b>ID:</b> {user.id}</p>
-          <p><b>Имя:</b> {user.first_name}</p>
-          <p><b>Юзернейм:</b> @{user.username}</p>
-          <p><b>Баланс:</b> {user.balance} ⭐</p>
-        </div>
-      ) : (
-        <p>Открой меня внутри Telegram, чтобы увидеть свои данные</p>
-      )}
-    </div>
-  );
+    {user ? (
+      <div>
+        <p><b>ID:</b> {user.id}</p>
+        <p><b>Имя:</b> {user.first_name}</p>
+        <p><b>Юзернейм:</b> @{user.username}</p>
+        <p><b>Баланс:</b> {user.balance} ⭐</p>
+
+        {/* 🔹 Кнопка рулетки */}
+        <button
+          onClick={() => {
+            fetch("http://localhost:3000/spin", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ id: user.id }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.error) {
+                  alert(data.error);
+                } else {
+                  alert("Результат: " + data.result);
+                  setUser({ ...user, balance: data.newBalance });
+                }
+              })
+              .catch((err) => console.error("Ошибка:", err));
+          }}
+        >
+          🎰 Крутить рулетку (10⭐)
+        </button>
+      </div>
+    ) : (
+      <p>Открой меня внутри Telegram, чтобы увидеть свои данные</p>
+    )}
+  </div>
+);
+
 }
 
 export default App;
