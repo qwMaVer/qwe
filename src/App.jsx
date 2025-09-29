@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState(null);
-
-  const prizes = [
-    "🎁 50⭐ бонус",
-    "🎉 Стикер Telegram",
-    "🌟 NFT приз",
-    "😢 Пусто, ничего не выиграл",
-    "🔥 Редкий NFT",
-  ];
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
@@ -47,14 +40,10 @@ function App() {
 
   const spinWheel = () => {
     if (!user || user.balance < 10) {
-      alert("Недостаточно звезд ⭐ для крутки (10⭐)");
+      alert("Недостаточно ⭐ для крутки (10⭐)");
       return;
     }
 
-    // уменьшаем баланс локально
-    setUser((prev) => ({ ...prev, balance: prev.balance - 10 }));
-
-    // отправляем на backend, чтобы сохранить
     fetch("http://localhost:3000/user/spin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -67,33 +56,53 @@ function App() {
       });
   };
 
-  if (loading) return <p className="text-white text-xl text-center">Загрузка...</p>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 text-white">
+        <p className="text-2xl animate-pulse">Загрузка...</p>
+      </div>
+    );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
-      <h1 className="text-4xl font-bold text-red-500 mb-6">
-        Проверка Tailwind 🚀
-      </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 text-white p-6">
+      <motion.h1
+        className="text-4xl font-bold mb-8 drop-shadow-lg"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: 100 }}
+      >
+        🎰 Telegram MiniApp: Рулетка
+      </motion.h1>
 
       {user ? (
-        <div className="bg-gray-800 p-6 rounded-xl shadow-xl text-center">
-          <p><b>ID:</b> {user.id}</p>
-          <p><b>Имя:</b> {user.first_name}</p>
-          <p><b>Баланс:</b> {user.balance} ⭐</p>
+        <motion.div
+          className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-xl w-full max-w-md text-center"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <p className="mb-2"><b>ID:</b> {user.id}</p>
+          <p className="mb-2"><b>Имя:</b> {user.first_name}</p>
+          <p className="mb-4"><b>Баланс:</b> {user.balance} ⭐</p>
 
-          <button
+          <motion.button
             onClick={spinWheel}
-            className="mt-6 px-6 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg hover:scale-105 transition-transform"
+            className="mt-4 px-8 py-4 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform"
+            whileTap={{ scale: 0.9 }}
           >
-            🎰 Крутить рулетку (10⭐)
-          </button>
+            🎲 Крутить рулетку (10⭐)
+          </motion.button>
 
           {result && (
-            <div className="mt-6 text-2xl font-semibold">
+            <motion.div
+              className="mt-6 text-2xl font-semibold text-yellow-300 drop-shadow-md"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 120 }}
+            >
               🎯 Результат: {result}
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       ) : (
         <p>Открой MiniApp в Telegram, чтобы увидеть свои данные</p>
       )}
