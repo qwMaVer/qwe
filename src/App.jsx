@@ -40,6 +40,7 @@ function App() {
       setLoading(false);
     }
   }, []);
+  <h1 className="text-4xl text-red-500">Проверка Tailwind 🚀</h1>
 
   const spinWheel = () => {
     if (!user || user.balance < 10) {
