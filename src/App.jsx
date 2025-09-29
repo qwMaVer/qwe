@@ -1,24 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     const tg = window.Telegram.WebApp;
-
-    // Сообщаем Telegram, что приложение готово
     tg.ready();
 
-    console.log("Telegram объект:", window.Telegram);
+    // Берём данные о пользователе
+    const initData = tg.initDataUnsafe;
 
-
-    // Пример: меняем фон внутри Telegram
-    tg.setBackgroundColor("#F4F4F4");
+    if (initData?.user) {
+      setUser(initData.user);
+      console.log("Данные пользователя:", initData.user);
+    } else {
+      console.log("Пользовательские данные не найдены (браузер).");
+    }
   }, []);
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Моё первое Telegram MiniApp 🚀</h1>
-      <p>Если видишь это в браузере — значит SDK подключен.</p>
-      <p>А в консоли браузера (F12 → Console) появится объект Telegram.</p>
+      <h1>Telegram MiniApp 🚀</h1>
+
+      {user ? (
+        <div>
+          <p><b>ID:</b> {user.id}</p>
+          <p><b>Имя:</b> {user.first_name}</p>
+          <p><b>Юзернейм:</b> @{user.username}</p>
+        </div>
+      ) : (
+        <p>Открой меня внутри Telegram, чтобы увидеть свои данные</p>
+      )}
     </div>
   );
 }
