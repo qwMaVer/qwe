@@ -40,7 +40,7 @@ function App() {
       setLoading(false);
     }
   }, []);
-  <h1 className="text-4xl text-red-500">Проверка Tailwind 🚀</h1>
+
 
   const spinWheel = () => {
     if (!user || user.balance < 10) {
@@ -91,6 +91,15 @@ function App() {
       )}
     </div>
   );
+  function App() {
+  return (
+    <div className="flex items-center justify-center h-screen bg-gray-900">
+      <h1 className="text-4xl text-red-500">
+        Проверка Tailwind 🚀
+      </h1>
+    </div>
+  );
+}
 }
 
 export default App;
