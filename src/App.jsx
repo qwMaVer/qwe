@@ -1,3 +1,4 @@
+import "./App.css";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -48,7 +49,6 @@ function App() {
     }
   }, []);
 
-  // 🎰 Крутка рулетки
   const spinWheel = () => {
     if (!user || user.balance < 10 || spinning) {
       alert("Недостаточно ⭐ или колесо уже крутится");
@@ -59,7 +59,6 @@ function App() {
 
     const randomIndex = Math.floor(Math.random() * prizes.length);
     const segmentAngle = 360 / prizes.length;
-
     const finalRotation =
       rotation + 360 * 5 + (360 - randomIndex * segmentAngle - segmentAngle / 2);
 
@@ -76,13 +75,10 @@ function App() {
         body: JSON.stringify({ id: user.id }),
       })
         .then((res) => res.json())
-        .then((data) => {
-          setUser(data);
-        });
+        .then((data) => setUser(data));
     }, 5000);
   };
 
-  // 💰 Пополнение баланса
   const addBalance = () => {
     fetch("http://localhost:3000/user/addBalance", {
       method: "POST",
@@ -90,22 +86,20 @@ function App() {
       body: JSON.stringify({ id: user.id, amount: 50 }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-      });
+      .then((data) => setUser(data));
   };
 
   if (loading)
     return (
-      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-pink-500 via-purple-700 to-indigo-900 text-white">
-        <p className="text-2xl animate-pulse">Загрузка...</p>
+      <div className="app-container loading">
+        <p>Загрузка...</p>
       </div>
     );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-purple-700 to-indigo-900 text-white p-6">
+    <div className="app-container">
       <motion.h1
-        className="text-4xl font-extrabold mb-8 drop-shadow-lg"
+        className="title"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -114,64 +108,32 @@ function App() {
       </motion.h1>
 
       {user ? (
-        <div className="flex flex-col items-center">
-          <p className="mb-2 text-lg">👤 {user.first_name}</p>
-          <p className="mb-6 text-2xl font-semibold text-yellow-300 drop-shadow-md">
-            💰 Баланс: {user.balance} ⭐
-          </p>
+        <div className="user-section">
+          <p>👤 {user.first_name}</p>
+          <p className="balance">💰 Баланс: {user.balance} ⭐</p>
 
-          {/* Стрелка */}
-          <div className="relative mb-[-20px] z-10">
-            <div className="w-0 h-0 border-l-[15px] border-r-[15px] border-b-[30px] border-l-transparent border-r-transparent border-b-yellow-400 drop-shadow-lg"></div>
-          </div>
+          <div className="arrow"></div>
 
-          {/* Колесо */}
           <motion.div
-            className="relative rounded-full border-8 border-white shadow-2xl overflow-hidden"
+            className="wheel"
             style={{
-              width: 300,
-              height: 300,
-              background: `conic-gradient(
-                #FF6B6B 0deg ${360 / prizes.length}deg,
-                #FFD93D ${360 / prizes.length}deg ${(360 / prizes.length) * 2}deg,
-                #6BCB77 ${(360 / prizes.length) * 2}deg ${(360 / prizes.length) * 3}deg,
-                #4D96FF ${(360 / prizes.length) * 3}deg ${(360 / prizes.length) * 4}deg,
-                #9D4EDD ${(360 / prizes.length) * 4}deg 360deg
-              )`,
+              transform: `rotate(${rotation}deg)`,
             }}
             animate={{ rotate: rotation }}
             transition={{ duration: 5, ease: "easeOut" }}
-          />
-
-          {/* 🎲 Крутка */}
-          <motion.button
-            onClick={spinWheel}
-            className="mt-8 px-8 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg shadow-[0_0_15px_rgba(255,215,0,0.6)] hover:scale-105 transition-transform"
-            whileTap={{ scale: 0.9 }}
-            disabled={user.balance < 10 || spinning}
           >
+            {/* Сегменты можно будет подписывать через CSS или позже */}
+          </motion.div>
+
+          <button className="spin-btn" onClick={spinWheel} disabled={user.balance < 10 || spinning}>
             🎲 Крутить рулетку (10⭐)
-          </motion.button>
+          </button>
 
-          {/* 💰 Пополнение */}
-          <motion.button
-            onClick={addBalance}
-            className="mt-4 px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl font-bold text-lg shadow-[0_0_15px_rgba(0,255,128,0.6)] hover:scale-105 transition-transform"
-            whileTap={{ scale: 0.9 }}
-          >
+          <button className="add-btn" onClick={addBalance}>
             ➕ Пополнить баланс (+50⭐)
-          </motion.button>
+          </button>
 
-          {result && (
-            <motion.div
-              className="mt-6 text-3xl font-extrabold text-yellow-300 drop-shadow-lg"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              🎯 Результат: {result}
-            </motion.div>
-          )}
+          {result && <div className="result">🎯 Результат: {result}</div>}
         </div>
       ) : (
         <p>Открой MiniApp в Telegram, чтобы увидеть свои данные</p>

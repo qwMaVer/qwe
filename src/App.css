@@ -1,42 +1,107 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+  color: white;
+  padding: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.loading {
+  font-size: 2rem;
+  animation: pulse 1s infinite alternate;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+@keyframes pulse {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
 }
 
-.card {
-  padding: 2em;
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-.read-the-docs {
-  color: #888;
+.user-section p {
+  margin: 5px 0;
+  font-size: 1.2rem;
+}
+
+.balance {
+  font-size: 1.5rem;
+  color: #ffd93d;
+  font-weight: bold;
+  text-shadow: 0 0 5px black;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid yellow;
+  margin-bottom: -15px;
+  z-index: 10;
+}
+
+.wheel {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 8px solid white;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  margin: 20px auto;
+  background: conic-gradient(
+    #FF6B6B 0deg 72deg,
+    #FFD93D 72deg 144deg,
+    #6BCB77 144deg 216deg,
+    #4D96FF 216deg 288deg,
+    #9D4EDD 288deg 360deg
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+button {
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.spin-btn {
+  background: linear-gradient(to right, #ff6b6b, #ffd93d);
+  color: black;
+}
+
+.add-btn {
+  background: linear-gradient(to right, #6BCB77, #4D96FF);
+  color: white;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffd93d;
 }
