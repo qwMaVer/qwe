@@ -5,6 +5,16 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState(null);
+  const [spinning, setSpinning] = useState(false);
+  const [rotation, setRotation] = useState(0);
+
+  const prizes = [
+    "🎁 50⭐ бонус",
+    "🎉 Стикер Telegram",
+    "🌟 NFT приз",
+    "😢 Пусто",
+    "🔥 Редкий NFT",
+  ];
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
@@ -39,21 +49,41 @@ function App() {
   }, []);
 
   const spinWheel = () => {
-    if (!user || user.balance < 10) {
-      alert("Недостаточно ⭐ для крутки (10⭐)");
+    if (!user || user.balance < 10 || spinning) {
+      alert("Недостаточно ⭐ или колесо уже крутится");
       return;
     }
 
-    fetch("http://localhost:3000/user/spin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: user.id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-        setResult(data.lastPrize);
-      });
+    setUser((prev) => ({ ...prev, balance: prev.balance - 10 }));
+
+    // выбираем случайный сектор
+    const randomIndex = Math.floor(Math.random() * prizes.length);
+
+    // угол сектора
+    const segmentAngle = 360 / prizes.length;
+
+    // конечный угол = несколько полных оборотов + сектор
+    const finalRotation =
+      rotation + 360 * 5 + (360 - randomIndex * segmentAngle - segmentAngle / 2);
+
+    setRotation(finalRotation);
+    setSpinning(true);
+
+    setTimeout(() => {
+      setSpinning(false);
+      setResult(prizes[randomIndex]);
+
+      // сохраняем результат на бэкенде
+      fetch("http://localhost:3000/user/spin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: user.id }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUser(data);
+        });
+    }, 5000);
   };
 
   if (loading)
@@ -66,27 +96,49 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 text-white p-6">
       <motion.h1
-        className="text-4xl font-bold mb-8 drop-shadow-lg"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 100 }}
+        className="text-3xl font-bold mb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
       >
-        🎰 Telegram MiniApp: Рулетка
+        🎰 Telegram MiniApp: Кастомная рулетка
       </motion.h1>
 
       {user ? (
-        <motion.div
-          className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-xl w-full max-w-md text-center"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <p className="mb-2"><b>ID:</b> {user.id}</p>
-          <p className="mb-2"><b>Имя:</b> {user.first_name}</p>
-          <p className="mb-4"><b>Баланс:</b> {user.balance} ⭐</p>
+        <div className="flex flex-col items-center">
+          <p className="mb-2 text-lg">👤 {user.first_name}</p>
+          <p className="mb-4 text-xl">💰 Баланс: {user.balance} ⭐</p>
+
+          {/* Стрелка */}
+          <div className="relative mb-[-20px] z-10">
+            <div className="w-0 h-0 border-l-[15px] border-r-[15px] border-b-[30px] border-l-transparent border-r-transparent border-b-yellow-400"></div>
+          </div>
+
+          {/* Колесо */}
+          <motion.div
+            className="relative rounded-full border-8 border-white shadow-2xl"
+            style={{
+              width: 300,
+              height: 300,
+              background: `conic-gradient(
+                #FF6B6B 0deg ${360 / prizes.length}deg,
+                #FFD93D ${360 / prizes.length}deg ${(360 / prizes.length) * 2}deg,
+                #6BCB77 ${(360 / prizes.length) * 2}deg ${(360 / prizes.length) * 3}deg,
+                #4D96FF ${(360 / prizes.length) * 3}deg ${(360 / prizes.length) * 4}deg,
+                #9D4EDD ${(360 / prizes.length) * 4}deg 360deg
+              )`,
+            }}
+            animate={{ rotate: rotation }}
+            transition={{ duration: 5, ease: "easeOut" }}
+          >
+            {/* Текст по кругу */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <p className="text-2xl font-bold text-white drop-shadow-lg">🎡</p>
+            </div>
+          </motion.div>
 
           <motion.button
             onClick={spinWheel}
-            className="mt-4 px-8 py-4 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform"
+            className="mt-8 px-6 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform"
             whileTap={{ scale: 0.9 }}
           >
             🎲 Крутить рулетку (10⭐)
@@ -95,14 +147,14 @@ function App() {
           {result && (
             <motion.div
               className="mt-6 text-2xl font-semibold text-yellow-300 drop-shadow-md"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 120 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
             >
               🎯 Результат: {result}
             </motion.div>
           )}
-        </motion.div>
+        </div>
       ) : (
         <p>Открой MiniApp в Telegram, чтобы увидеть свои данные</p>
       )}
