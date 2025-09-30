@@ -48,6 +48,7 @@ function App() {
     }
   }, []);
 
+  // 🎰 Крутка рулетки
   const spinWheel = () => {
     if (!user || user.balance < 10 || spinning) {
       alert("Недостаточно ⭐ или колесо уже крутится");
@@ -56,13 +57,9 @@ function App() {
 
     setUser((prev) => ({ ...prev, balance: prev.balance - 10 }));
 
-    // выбираем случайный сектор
     const randomIndex = Math.floor(Math.random() * prizes.length);
-
-    // угол сектора
     const segmentAngle = 360 / prizes.length;
 
-    // конечный угол = несколько полных оборотов + сектор
     const finalRotation =
       rotation + 360 * 5 + (360 - randomIndex * segmentAngle - segmentAngle / 2);
 
@@ -73,7 +70,6 @@ function App() {
       setSpinning(false);
       setResult(prizes[randomIndex]);
 
-      // сохраняем результат на бэкенде
       fetch("http://localhost:3000/user/spin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -84,6 +80,19 @@ function App() {
           setUser(data);
         });
     }, 5000);
+  };
+
+  // 💰 Пополнение баланса
+  const addBalance = () => {
+    fetch("http://localhost:3000/user/addBalance", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: user.id, amount: 50 }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data);
+      });
   };
 
   if (loading)
@@ -130,18 +139,28 @@ function App() {
             animate={{ rotate: rotation }}
             transition={{ duration: 5, ease: "easeOut" }}
           >
-            {/* Текст по кругу */}
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="text-2xl font-bold text-white drop-shadow-lg">🎡</p>
             </div>
           </motion.div>
 
+          {/* 🎲 Крутка */}
           <motion.button
             onClick={spinWheel}
             className="mt-8 px-6 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform"
             whileTap={{ scale: 0.9 }}
+            disabled={user.balance < 10 || spinning}
           >
             🎲 Крутить рулетку (10⭐)
+          </motion.button>
+
+          {/* 💰 Пополнение */}
+          <motion.button
+            onClick={addBalance}
+            className="mt-4 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform"
+            whileTap={{ scale: 0.9 }}
+          >
+            ➕ Пополнить баланс (+50⭐)
           </motion.button>
 
           {result && (
