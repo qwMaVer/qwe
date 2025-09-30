@@ -97,17 +97,18 @@ function App() {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 text-white">
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-pink-500 via-purple-700 to-indigo-900 text-white">
         <p className="text-2xl animate-pulse">Загрузка...</p>
       </div>
     );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 text-white p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-purple-700 to-indigo-900 text-white p-6">
       <motion.h1
-        className="text-3xl font-bold mb-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        className="text-4xl font-extrabold mb-8 drop-shadow-lg"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
       >
         🎰 Telegram MiniApp: Кастомная рулетка
       </motion.h1>
@@ -115,16 +116,18 @@ function App() {
       {user ? (
         <div className="flex flex-col items-center">
           <p className="mb-2 text-lg">👤 {user.first_name}</p>
-          <p className="mb-4 text-xl">💰 Баланс: {user.balance} ⭐</p>
+          <p className="mb-6 text-2xl font-semibold text-yellow-300 drop-shadow-md">
+            💰 Баланс: {user.balance} ⭐
+          </p>
 
           {/* Стрелка */}
           <div className="relative mb-[-20px] z-10">
-            <div className="w-0 h-0 border-l-[15px] border-r-[15px] border-b-[30px] border-l-transparent border-r-transparent border-b-yellow-400"></div>
+            <div className="w-0 h-0 border-l-[15px] border-r-[15px] border-b-[30px] border-l-transparent border-r-transparent border-b-yellow-400 drop-shadow-lg"></div>
           </div>
 
           {/* Колесо */}
           <motion.div
-            className="relative rounded-full border-8 border-white shadow-2xl"
+            className="relative rounded-full border-8 border-white shadow-2xl overflow-hidden"
             style={{
               width: 300,
               height: 300,
@@ -138,14 +141,12 @@ function App() {
             }}
             animate={{ rotate: rotation }}
             transition={{ duration: 5, ease: "easeOut" }}
-          >
-            
-          </motion.div>
+          />
 
           {/* 🎲 Крутка */}
           <motion.button
             onClick={spinWheel}
-            className="mt-8 px-6 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform"
+            className="mt-8 px-8 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-xl font-bold text-lg shadow-[0_0_15px_rgba(255,215,0,0.6)] hover:scale-105 transition-transform"
             whileTap={{ scale: 0.9 }}
             disabled={user.balance < 10 || spinning}
           >
@@ -155,7 +156,7 @@ function App() {
           {/* 💰 Пополнение */}
           <motion.button
             onClick={addBalance}
-            className="mt-4 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform"
+            className="mt-4 px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl font-bold text-lg shadow-[0_0_15px_rgba(0,255,128,0.6)] hover:scale-105 transition-transform"
             whileTap={{ scale: 0.9 }}
           >
             ➕ Пополнить баланс (+50⭐)
@@ -163,7 +164,7 @@ function App() {
 
           {result && (
             <motion.div
-              className="mt-6 text-2xl font-semibold text-yellow-300 drop-shadow-md"
+              className="mt-6 text-3xl font-extrabold text-yellow-300 drop-shadow-lg"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
