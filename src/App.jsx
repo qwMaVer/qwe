@@ -139,9 +139,7 @@ function App() {
             animate={{ rotate: rotation }}
             transition={{ duration: 5, ease: "easeOut" }}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-2xl font-bold text-white drop-shadow-lg">🎡</p>
-            </div>
+            
           </motion.div>
 
           {/* 🎲 Крутка */}
