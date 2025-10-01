@@ -39,7 +39,6 @@ function App() {
     }
   }, []);
 
-  // 🎰 Крутка
   const spinWheel = () => {
     if (!user || user.balance < 10 || spinning) {
       alert("Недостаточно ⭐ или колесо крутится");
@@ -69,7 +68,6 @@ function App() {
     }, 5000);
   };
 
-  // 💰 Пополнение
   const addBalance = () => {
     fetch("http://localhost:3000/user/addBalance", {
       method: "POST",
@@ -82,7 +80,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Контент */}
       <div className={`content ${activeTab}`}>
         {activeTab === "roulette" && (
           <>
@@ -134,7 +131,6 @@ function App() {
         )}
       </div>
 
-      {/* Нижнее меню */}
       <div className="bottom-nav">
         <button
           className={activeTab === "roulette" ? "active" : ""}
