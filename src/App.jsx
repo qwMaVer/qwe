@@ -2,10 +2,9 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-// импортируем картинки
-import WheelIcon from "./assets/previewfile_2933794851.png";
-import BalanceIcon from "./assets/koshel.png";
-import ProfileIcon from "./assets/tipok.png";
+import rouletteIcon from "./assets/previewfile_2933794851.png";
+import balanceIcon from "./assets/koshel.png";
+import profileIcon from "./assets/tipok.png";
 
 function App() {
   const [activeTab, setActiveTab] = useState("roulette");
@@ -138,25 +137,27 @@ function App() {
         </div>
       </div>
 
-      {/* Меню */}
       <div className="bottom-nav">
         <button
           className={activeTab === "roulette" ? "active" : ""}
           onClick={() => setActiveTab("roulette")}
         >
-          <img src={WheelIcon} alt="Рулетка" className="nav-icon" />
+          <img src={rouletteIcon} alt="Рулетка" className="nav-icon" />
+          <span>Рулетка</span>
         </button>
         <button
           className={activeTab === "balance" ? "active" : ""}
           onClick={() => setActiveTab("balance")}
         >
-          <img src={BalanceIcon} alt="Баланс" className="nav-icon" />
+          <img src={balanceIcon} alt="Баланс" className="nav-icon" />
+          <span>Баланс</span>
         </button>
         <button
           className={activeTab === "profile" ? "active" : ""}
           onClick={() => setActiveTab("profile")}
         >
-          <img src={ProfileIcon} alt="Профиль" className="nav-icon" />
+          <img src={profileIcon} alt="Профиль" className="nav-icon" />
+          <span>Профиль</span>
         </button>
       </div>
     </div>
