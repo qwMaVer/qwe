@@ -21,8 +21,13 @@ body, html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 70px; /* чтобы кнопки снизу не налезали */
+  padding-bottom: 60px; /* место для навигации */
   box-sizing: border-box;
+}
+
+/* 🎡 Раздел рулетки приподнятый */
+.content.roulette {
+  padding-bottom: 100px; /* больше отступ, чтобы колесо не налезало на меню */
 }
 
 .title {
@@ -30,11 +35,6 @@ body, html {
   font-weight: bold;
   margin-bottom: 20px;
   text-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-.user-section p {
-  margin: 5px 0;
-  font-size: 1.2rem;
 }
 
 .balance {
@@ -56,8 +56,8 @@ body, html {
 }
 
 .wheel {
-  width: 300px;
-  height: 300px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   border: 8px solid white;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
@@ -73,8 +73,8 @@ body, html {
 
 button {
   margin: 10px;
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 10px 20px;
+  font-size: 15px;
   font-weight: bold;
   border: none;
   border-radius: 10px;
@@ -108,7 +108,7 @@ button:hover {
   display: flex;
   justify-content: space-around;
   background: rgba(0, 0, 0, 0.6);
-  padding: 12px 0;
+  padding: 8px 0; /* стало тоньше */
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -118,7 +118,7 @@ button:hover {
 .bottom-nav button {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 20px; /* иконки меньше */
   color: white;
   cursor: pointer;
   transition: 0.3s;
@@ -126,5 +126,5 @@ button:hover {
 
 .bottom-nav button.active {
   color: gold;
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
