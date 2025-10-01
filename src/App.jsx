@@ -80,55 +80,57 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className={`content ${activeTab}`}>
-        {activeTab === "roulette" && (
-          <>
-            <h1>🎰 Рулетка</h1>
-            {user && (
-              <>
-                <div className="arrow"></div>
-                <motion.div
-                  className="wheel"
-                  animate={{ rotate: rotation }}
-                  transition={{ duration: 5, ease: "easeOut" }}
-                />
-                <button className="action spin-btn" onClick={spinWheel}>
-                  🎲 Крутить (10⭐)
-                </button>
-                {result && <div className="result">🎯 {result}</div>}
-              </>
-            )}
-          </>
-        )}
+      <div className="content">
+        <div className="content-inner">
+          {activeTab === "roulette" && (
+            <>
+              <h1>🎰 Рулетка</h1>
+              {user && (
+                <>
+                  <div className="arrow"></div>
+                  <motion.div
+                    className="wheel"
+                    animate={{ rotate: rotation }}
+                    transition={{ duration: 5, ease: "easeOut" }}
+                  />
+                  <button className="action spin-btn" onClick={spinWheel}>
+                    🎲 Крутить (10⭐)
+                  </button>
+                  {result && <div className="result">🎯 {result}</div>}
+                </>
+              )}
+            </>
+          )}
 
-        {activeTab === "balance" && (
-          <>
-            <h1>💰 Баланс</h1>
-            {user && (
-              <>
-                <p className="balance">⭐ {user.balance}</p>
-                <button className="action balance-btn" onClick={addBalance}>
-                  ➕ Пополнить (+50⭐)
-                </button>
-              </>
-            )}
-          </>
-        )}
+          {activeTab === "balance" && (
+            <>
+              <h1>💰 Баланс</h1>
+              {user && (
+                <>
+                  <p className="balance">⭐ {user.balance}</p>
+                  <button className="action balance-btn" onClick={addBalance}>
+                    ➕ Пополнить (+50⭐)
+                  </button>
+                </>
+              )}
+            </>
+          )}
 
-        {activeTab === "profile" && (
-          <>
-            <h1>👤 Профиль</h1>
-            {user ? (
-              <>
-                <p>Имя: {user.first_name}</p>
-                <p>Username: @{user.username}</p>
-                <p>ID: {user.id}</p>
-              </>
-            ) : (
-              <p>Открой MiniApp в Telegram</p>
-            )}
-          </>
-        )}
+          {activeTab === "profile" && (
+            <>
+              <h1>👤 Профиль</h1>
+              {user ? (
+                <>
+                  <p>Имя: {user.first_name}</p>
+                  <p>Username: @{user.username}</p>
+                  <p>ID: {user.id}</p>
+                </>
+              ) : (
+                <p>Открой MiniApp в Telegram</p>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       <div className="bottom-nav">

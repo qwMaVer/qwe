@@ -3,7 +3,7 @@ body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: white;
-  overflow: hidden; /* 🚫 полностью убираем скролл */
+  overflow: hidden; /* убрали скролл */
 }
 
 .app-container {
@@ -12,19 +12,28 @@ body {
   height: 100vh;
 }
 
+/* Контент занимает экран минус меню */
 .content {
   flex: 1;
-  height: calc(100vh - 70px); /* минус высота меню */
+  height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* контент чуть выше */
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Чтобы ничего не упиралось в меню */
+.content-inner {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.content.roulette {
-  padding-bottom: 20px; /* чуть выше меню */
+  padding-bottom: 50px; /* запас над меню */
 }
 
 /* Нижнее меню */
@@ -54,6 +63,7 @@ body {
   transform: scale(1.15);
 }
 
+/* Колесо */
 .arrow {
   width: 0;
   height: 0;
@@ -64,8 +74,8 @@ body {
 }
 
 .wheel {
-  width: 260px;  /* ⚡ сделал чуть меньше */
-  height: 260px;
+  width: min(60vw, 260px); /* адаптивный размер */
+  height: min(60vw, 260px);
   border-radius: 50%;
   border: 8px solid white;
   margin: 15px 0;
