@@ -1,11 +1,8 @@
-body, html {
+body {
   margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
-  height: 100%;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: white;
-  overflow: hidden; /* 🚫 убираем скролл */
 }
 
 .app-container {
@@ -14,54 +11,63 @@ body, html {
   height: 100vh;
 }
 
-/* Контент вкладок */
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 60px; /* место для навигации */
+  padding-bottom: 100px; /* место под меню */
   box-sizing: border-box;
 }
 
-/* 🎡 Раздел рулетки приподнятый */
 .content.roulette {
-  padding-bottom: 100px; /* больше отступ, чтобы колесо не налезало на меню */
+  padding-bottom: 120px; /* рулетку чуть выше */
 }
 
-.title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+/* Нижнее меню */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+  background: #111; /* отдельный фон */
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-.balance {
-  font-size: 1.5rem;
-  color: #ffd93d;
-  font-weight: bold;
-  text-shadow: 0 0 5px black;
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* Колесо 🎡 */
+.bottom-nav button.active {
+  color: gold;
+  transform: scale(1.15);
+}
+
 .arrow {
   width: 0;
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-bottom: 30px solid yellow;
-  margin-bottom: -15px;
-  z-index: 10;
+  margin-bottom: -20px;
 }
 
 .wheel {
-  width: 280px;
-  height: 280px;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   border: 8px solid white;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-  margin: 20px auto;
+  margin: 20px 0;
+  box-shadow: 0 0 25px rgba(0,0,0,0.5);
   background: conic-gradient(
     #FF6B6B 0deg 72deg,
     #FFD93D 72deg 144deg,
@@ -71,28 +77,20 @@ body, html {
   );
 }
 
-button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 15px;
-  font-weight: bold;
+button.action {
+  margin-top: 15px;
+  padding: 12px 20px;
   border: none;
   border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.spin-btn {
-  background: linear-gradient(to right, #ff6b6b, #ffd93d);
-  color: black;
-}
-
-.add-btn, .balance-btn {
-  background: linear-gradient(to right, #6BCB77, #4D96FF);
   color: white;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  transition: 0.3s;
 }
 
-button:hover {
+button.action:hover {
   transform: scale(1.05);
 }
 
@@ -100,31 +98,5 @@ button:hover {
   margin-top: 20px;
   font-size: 22px;
   font-weight: bold;
-  color: #ffd93d;
-}
-
-/* Нижнее меню 📌 */
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 8px 0; /* стало тоньше */
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  backdrop-filter: blur(8px);
-}
-
-.bottom-nav button {
-  background: none;
-  border: none;
-  font-size: 20px; /* иконки меньше */
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.bottom-nav button.active {
   color: gold;
-  transform: scale(1.15);
 }

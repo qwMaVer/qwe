@@ -1,14 +1,13 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 function App() {
+  const [activeTab, setActiveTab] = useState("roulette");
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [result, setResult] = useState(null);
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
-  const [activeTab, setActiveTab] = useState("wheel"); // 🎯 текущая вкладка
 
   const prizes = [
     "🎁 50⭐ бонус",
@@ -23,10 +22,8 @@ function App() {
     tg.ready();
 
     const initData = tg.initDataUnsafe;
-
     if (initData?.user) {
       const u = initData.user;
-
       fetch("http://localhost:3000/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -37,31 +34,21 @@ function App() {
         }),
       })
         .then((res) => res.json())
-        .then((data) => {
-          setUser(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
+        .then((data) => setUser(data))
+        .catch((err) => console.error(err));
     }
   }, []);
 
-  // 🎰 Крутка рулетки
+  // 🎰 Крутка
   const spinWheel = () => {
     if (!user || user.balance < 10 || spinning) {
-      alert("Недостаточно ⭐ или колесо уже крутится");
+      alert("Недостаточно ⭐ или колесо крутится");
       return;
     }
 
     setUser((prev) => ({ ...prev, balance: prev.balance - 10 }));
-
     const randomIndex = Math.floor(Math.random() * prizes.length);
     const segmentAngle = 360 / prizes.length;
-
     const finalRotation =
       rotation + 360 * 5 + (360 - randomIndex * segmentAngle - segmentAngle / 2);
 
@@ -78,13 +65,11 @@ function App() {
         body: JSON.stringify({ id: user.id }),
       })
         .then((res) => res.json())
-        .then((data) => {
-          setUser(data);
-        });
+        .then((data) => setUser(data));
     }, 5000);
   };
 
-  // 💰 Пополнение баланса
+  // 💰 Пополнение
   const addBalance = () => {
     fetch("http://localhost:3000/user/addBalance", {
       method: "POST",
@@ -92,97 +77,68 @@ function App() {
       body: JSON.stringify({ id: user.id, amount: 50 }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-      });
+      .then((data) => setUser(data));
   };
-
-  if (loading)
-    return (
-      <div className="loading-screen">
-        <p>Загрузка...</p>
-      </div>
-    );
 
   return (
     <div className="app-container">
-      <div className="content">
-        {/* 🎡 Вкладка "Рулетка" */}
-        {activeTab === "wheel" && (
-          <div className="wheel-tab">
-            <h1>🎰 Крутка рулетки</h1>
-
-            {/* Стрелка */}
-            <div className="arrow"></div>
-
-            {/* Колесо */}
-            <motion.div
-              className="wheel"
-              style={{
-                background: `conic-gradient(
-                  #FF6B6B 0deg ${360 / prizes.length}deg,
-                  #FFD93D ${360 / prizes.length}deg ${(360 / prizes.length) * 2}deg,
-                  #6BCB77 ${(360 / prizes.length) * 2}deg ${(360 / prizes.length) * 3}deg,
-                  #4D96FF ${(360 / prizes.length) * 3}deg ${(360 / prizes.length) * 4}deg,
-                  #9D4EDD ${(360 / prizes.length) * 4}deg 360deg
-                )`,
-              }}
-              animate={{ rotate: rotation }}
-              transition={{ duration: 5, ease: "easeOut" }}
-            />
-
-            <motion.button
-              onClick={spinWheel}
-              className="spin-btn"
-              whileTap={{ scale: 0.9 }}
-              disabled={user.balance < 10 || spinning}
-            >
-              🎲 Крутить (10⭐)
-            </motion.button>
-
-            {result && (
-              <motion.div
-                className="result"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-              >
-                🎯 Результат: {result}
-              </motion.div>
+      {/* Контент */}
+      <div className={`content ${activeTab}`}>
+        {activeTab === "roulette" && (
+          <>
+            <h1>🎰 Рулетка</h1>
+            {user && (
+              <>
+                <div className="arrow"></div>
+                <motion.div
+                  className="wheel"
+                  animate={{ rotate: rotation }}
+                  transition={{ duration: 5, ease: "easeOut" }}
+                />
+                <button className="action spin-btn" onClick={spinWheel}>
+                  🎲 Крутить (10⭐)
+                </button>
+                {result && <div className="result">🎯 {result}</div>}
+              </>
             )}
-          </div>
+          </>
         )}
 
-        {/* 💰 Вкладка "Баланс" */}
         {activeTab === "balance" && (
-          <div className="balance-tab">
+          <>
             <h1>💰 Баланс</h1>
-            <p>Ваш баланс: {user.balance} ⭐</p>
-            <motion.button
-              onClick={addBalance}
-              className="balance-btn"
-              whileTap={{ scale: 0.9 }}
-            >
-              ➕ Пополнить (+50⭐)
-            </motion.button>
-          </div>
+            {user && (
+              <>
+                <p className="balance">⭐ {user.balance}</p>
+                <button className="action balance-btn" onClick={addBalance}>
+                  ➕ Пополнить (+50⭐)
+                </button>
+              </>
+            )}
+          </>
         )}
 
-        {/* 👤 Вкладка "Профиль" */}
         {activeTab === "profile" && (
-          <div className="profile-tab">
+          <>
             <h1>👤 Профиль</h1>
-            <p>ID: {user.id}</p>
-            <p>Имя: {user.first_name}</p>
-            <p>Username: @{user.username}</p>
-          </div>
+            {user ? (
+              <>
+                <p>Имя: {user.first_name}</p>
+                <p>Username: @{user.username}</p>
+                <p>ID: {user.id}</p>
+              </>
+            ) : (
+              <p>Открой MiniApp в Telegram</p>
+            )}
+          </>
         )}
       </div>
 
       {/* Нижнее меню */}
       <div className="bottom-nav">
         <button
-          className={activeTab === "wheel" ? "active" : ""}
-          onClick={() => setActiveTab("wheel")}
+          className={activeTab === "roulette" ? "active" : ""}
+          onClick={() => setActiveTab("roulette")}
         >
           🎡
         </button>
