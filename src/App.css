@@ -3,7 +3,7 @@ body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: white;
-  overflow: hidden; /* убрали скролл */
+  overflow: hidden;
 }
 
 .app-container {
@@ -12,6 +12,7 @@ body {
   height: 100vh;
 }
 
+/* Контент занимает экран минус меню */
 .content {
   flex: 1;
   height: calc(100vh - 70px);
@@ -25,6 +26,7 @@ body {
   overflow: hidden;
 }
 
+/* Чтобы ничего не упиралось в меню */
 .content-inner {
   flex: 1;
   display: flex;
@@ -41,7 +43,7 @@ body {
   align-items: center;
   height: 70px;
   background: #111;
-  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -55,31 +57,28 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  color: white;
+  font-size: 12px;
+  color: #777; /* серый текст */
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.25s ease;
 }
 
 .bottom-nav button img.nav-icon {
-  width: 26px;
-  height: 26px;
-  margin-bottom: 4px;
-  filter: invert(1); /* белый */
-}
-
-.bottom-nav button span {
-  font-size: 12px;
-  font-weight: 500;
+  width: 22px;
+  height: 22px;
+  margin-bottom: 3px;
+  filter: invert(50%); /* серые иконки */
+  transition: 0.25s ease;
 }
 
 .bottom-nav button.active {
-  color: gold;
+  color: #fff; /* белый текст */
+  transform: scale(1.1);
 }
 
 .bottom-nav button.active img.nav-icon {
-  filter: invert(92%) sepia(92%) saturate(500%) hue-rotate(20deg); /* золотой */
-  transform: scale(1.2);
+  filter: invert(1); /* белая иконка */
+  transform: scale(1.1);
 }
 
 /* Колесо */
