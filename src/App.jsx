@@ -2,6 +2,11 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+// импортируем картинки
+import WheelIcon from "./assets/previewfile_2933794851.png";
+import BalanceIcon from "./assets/koshel.png";
+import ProfileIcon from "./assets/tipok.png";
+
 function App() {
   const [activeTab, setActiveTab] = useState("roulette");
   const [user, setUser] = useState(null);
@@ -133,24 +138,25 @@ function App() {
         </div>
       </div>
 
+      {/* Меню */}
       <div className="bottom-nav">
         <button
           className={activeTab === "roulette" ? "active" : ""}
           onClick={() => setActiveTab("roulette")}
         >
-          🎡
+          <img src={WheelIcon} alt="Рулетка" className="nav-icon" />
         </button>
         <button
           className={activeTab === "balance" ? "active" : ""}
           onClick={() => setActiveTab("balance")}
         >
-          💰
+          <img src={BalanceIcon} alt="Баланс" className="nav-icon" />
         </button>
         <button
           className={activeTab === "profile" ? "active" : ""}
           onClick={() => setActiveTab("profile")}
         >
-          👤
+          <img src={ProfileIcon} alt="Профиль" className="nav-icon" />
         </button>
       </div>
     </div>

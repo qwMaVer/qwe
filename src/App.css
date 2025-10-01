@@ -18,7 +18,7 @@ body {
   height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* контент чуть выше */
+  justify-content: flex-start;
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
@@ -26,14 +26,13 @@ body {
   overflow: hidden;
 }
 
-/* Чтобы ничего не упиралось в меню */
 .content-inner {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 50px; /* запас над меню */
+  padding-bottom: 50px;
 }
 
 /* Нижнее меню */
@@ -52,15 +51,19 @@ body {
 .bottom-nav button {
   background: none;
   border: none;
-  font-size: 20px;
-  color: white;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-.bottom-nav button.active {
-  color: gold;
-  transform: scale(1.15);
+.nav-icon {
+  width: 28px;
+  height: 28px;
+  filter: invert(1); /* чёрное <-> белое */
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.bottom-nav button.active .nav-icon {
+  transform: scale(1.2);
+  filter: invert(0.7) sepia(1) saturate(5) hue-rotate(45deg); /* золотой оттенок */
 }
 
 /* Колесо */
@@ -74,7 +77,7 @@ body {
 }
 
 .wheel {
-  width: min(60vw, 260px); /* адаптивный размер */
+  width: min(60vw, 260px);
   height: min(60vw, 260px);
   border-radius: 50%;
   border: 8px solid white;
@@ -109,6 +112,12 @@ button.action:hover {
 .result {
   margin-top: 12px;
   font-size: 20px;
+  font-weight: bold;
+  color: gold;
+}
+
+.balance {
+  font-size: 1.5rem;
   font-weight: bold;
   color: gold;
 }
