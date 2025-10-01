@@ -8,6 +8,7 @@ function App() {
   const [result, setResult] = useState(null);
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [activeTab, setActiveTab] = useState("wheel"); // 🎯 текущая вкладка
 
   const prizes = [
     "🎁 50⭐ бонус",
@@ -49,6 +50,7 @@ function App() {
     }
   }, []);
 
+  // 🎰 Крутка рулетки
   const spinWheel = () => {
     if (!user || user.balance < 10 || spinning) {
       alert("Недостаточно ⭐ или колесо уже крутится");
@@ -59,6 +61,7 @@ function App() {
 
     const randomIndex = Math.floor(Math.random() * prizes.length);
     const segmentAngle = 360 / prizes.length;
+
     const finalRotation =
       rotation + 360 * 5 + (360 - randomIndex * segmentAngle - segmentAngle / 2);
 
@@ -75,10 +78,13 @@ function App() {
         body: JSON.stringify({ id: user.id }),
       })
         .then((res) => res.json())
-        .then((data) => setUser(data));
+        .then((data) => {
+          setUser(data);
+        });
     }, 5000);
   };
 
+  // 💰 Пополнение баланса
   const addBalance = () => {
     fetch("http://localhost:3000/user/addBalance", {
       method: "POST",
@@ -86,58 +92,113 @@ function App() {
       body: JSON.stringify({ id: user.id, amount: 50 }),
     })
       .then((res) => res.json())
-      .then((data) => setUser(data));
+      .then((data) => {
+        setUser(data);
+      });
   };
 
   if (loading)
     return (
-      <div className="app-container loading">
+      <div className="loading-screen">
         <p>Загрузка...</p>
       </div>
     );
 
   return (
     <div className="app-container">
-      <motion.h1
-        className="title"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        🎰 Telegram MiniApp: Кастомная рулетка
-      </motion.h1>
+      <div className="content">
+        {/* 🎡 Вкладка "Рулетка" */}
+        {activeTab === "wheel" && (
+          <div className="wheel-tab">
+            <h1>🎰 Крутка рулетки</h1>
 
-      {user ? (
-        <div className="user-section">
-          <p>👤 {user.first_name}</p>
-          <p className="balance">💰 Баланс: {user.balance} ⭐</p>
+            {/* Стрелка */}
+            <div className="arrow"></div>
 
-          <div className="arrow"></div>
+            {/* Колесо */}
+            <motion.div
+              className="wheel"
+              style={{
+                background: `conic-gradient(
+                  #FF6B6B 0deg ${360 / prizes.length}deg,
+                  #FFD93D ${360 / prizes.length}deg ${(360 / prizes.length) * 2}deg,
+                  #6BCB77 ${(360 / prizes.length) * 2}deg ${(360 / prizes.length) * 3}deg,
+                  #4D96FF ${(360 / prizes.length) * 3}deg ${(360 / prizes.length) * 4}deg,
+                  #9D4EDD ${(360 / prizes.length) * 4}deg 360deg
+                )`,
+              }}
+              animate={{ rotate: rotation }}
+              transition={{ duration: 5, ease: "easeOut" }}
+            />
 
-          <motion.div
-            className="wheel"
-            style={{
-              transform: `rotate(${rotation}deg)`,
-            }}
-            animate={{ rotate: rotation }}
-            transition={{ duration: 5, ease: "easeOut" }}
-          >
-            {/* Сегменты можно будет подписывать через CSS или позже */}
-          </motion.div>
+            <motion.button
+              onClick={spinWheel}
+              className="spin-btn"
+              whileTap={{ scale: 0.9 }}
+              disabled={user.balance < 10 || spinning}
+            >
+              🎲 Крутить (10⭐)
+            </motion.button>
 
-          <button className="spin-btn" onClick={spinWheel} disabled={user.balance < 10 || spinning}>
-            🎲 Крутить рулетку (10⭐)
-          </button>
+            {result && (
+              <motion.div
+                className="result"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                🎯 Результат: {result}
+              </motion.div>
+            )}
+          </div>
+        )}
 
-          <button className="add-btn" onClick={addBalance}>
-            ➕ Пополнить баланс (+50⭐)
-          </button>
+        {/* 💰 Вкладка "Баланс" */}
+        {activeTab === "balance" && (
+          <div className="balance-tab">
+            <h1>💰 Баланс</h1>
+            <p>Ваш баланс: {user.balance} ⭐</p>
+            <motion.button
+              onClick={addBalance}
+              className="balance-btn"
+              whileTap={{ scale: 0.9 }}
+            >
+              ➕ Пополнить (+50⭐)
+            </motion.button>
+          </div>
+        )}
 
-          {result && <div className="result">🎯 Результат: {result}</div>}
-        </div>
-      ) : (
-        <p>Открой MiniApp в Telegram, чтобы увидеть свои данные</p>
-      )}
+        {/* 👤 Вкладка "Профиль" */}
+        {activeTab === "profile" && (
+          <div className="profile-tab">
+            <h1>👤 Профиль</h1>
+            <p>ID: {user.id}</p>
+            <p>Имя: {user.first_name}</p>
+            <p>Username: @{user.username}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Нижнее меню */}
+      <div className="bottom-nav">
+        <button
+          className={activeTab === "wheel" ? "active" : ""}
+          onClick={() => setActiveTab("wheel")}
+        >
+          🎡
+        </button>
+        <button
+          className={activeTab === "balance" ? "active" : ""}
+          onClick={() => setActiveTab("balance")}
+        >
+          💰
+        </button>
+        <button
+          className={activeTab === "profile" ? "active" : ""}
+          onClick={() => setActiveTab("profile")}
+        >
+          👤
+        </button>
+      </div>
     </div>
   );
 }

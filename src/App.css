@@ -105,3 +105,89 @@ button:hover {
   font-weight: bold;
   color: #ffd93d;
 }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 12px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  backdrop-filter: blur(8px);
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.bottom-nav button.active {
+  color: gold;
+  transform: scale(1.2);
+}
+
+.wheel {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 8px solid white;
+  margin: 20px 0;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid yellow;
+  margin-bottom: -20px;
+}
+
+.spin-btn, .balance-btn {
+  padding: 12px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  transition: 0.3s;
+}
+
+.spin-btn:hover, .balance-btn:hover {
+  transform: scale(1.05);
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  color: gold;
+}
