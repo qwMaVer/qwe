@@ -2,10 +2,12 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-// импорт картинок
+// картинки
 import rouletteIcon from "./assets/previewfile_2933794851.png";
 import balanceIcon from "./assets/koshel.png";
 import profileIcon from "./assets/tipok.png";
+
+const API_URL = "http://79.174.12.22:3000"; // твой сервер
 
 function App() {
   const [activeTab, setActiveTab] = useState("roulette");
@@ -13,6 +15,7 @@ function App() {
   const [result, setResult] = useState(null);
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [history, setHistory] = useState([]);
 
   const prizes = [
     "🎁 50⭐ бонус",
@@ -29,7 +32,7 @@ function App() {
     const initData = tg.initDataUnsafe;
     if (initData?.user) {
       const u = initData.user;
-      fetch("http://localhost:3000/user", {
+      fetch(`${API_URL}/user`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -43,6 +46,13 @@ function App() {
         .catch((err) => console.error(err));
     }
   }, []);
+
+  const fetchHistory = (userId) => {
+    fetch(`${API_URL}/user/${userId}/prizes`)
+      .then((res) => res.json())
+      .then((data) => setHistory(data))
+      .catch((err) => console.error(err));
+  };
 
   const spinWheel = () => {
     if (!user || user.balance < 10 || spinning) {
@@ -63,18 +73,21 @@ function App() {
       setSpinning(false);
       setResult(prizes[randomIndex]);
 
-      fetch("http://localhost:3000/user/spin", {
+      fetch(`${API_URL}/user/spin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: user.id }),
       })
         .then((res) => res.json())
-        .then((data) => setUser(data));
+        .then((data) => {
+          setUser(data);
+          fetchHistory(data.id);
+        });
     }, 5000);
   };
 
   const addBalance = () => {
-    fetch("http://localhost:3000/user/addBalance", {
+    fetch(`${API_URL}/user/addBalance`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: user.id, amount: 50 }),
@@ -129,6 +142,15 @@ function App() {
                   <p>Имя: {user.first_name}</p>
                   <p>Username: @{user.username}</p>
                   <p>ID: {user.id}</p>
+                  <h2>История призов:</h2>
+                  <ul>
+                    {history.map((h, idx) => (
+                      <li key={idx}>
+                        {h.created_at?.slice(0, 19).replace("T", " ")} — {h.prize_name}
+                      </li>
+                    ))}
+                  </ul>
+                  <button onClick={() => fetchHistory(user.id)}>Обновить историю</button>
                 </>
               ) : (
                 <p>Открой MiniApp в Telegram</p>
