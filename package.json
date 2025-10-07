@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+  "build": "vite build --debug",
+  "lint": "eslint .",
+  "preview": "vite preview"
+},
+
   "dependencies": {
     "framer-motion": "^12.23.22",
     "pg": "^8.16.3",
