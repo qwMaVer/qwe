@@ -823,3 +823,20 @@
   top: 23px;
   white-space: nowrap;
 }
+/* 🚫 Запрещаем выделение текста и перетаскивание изображений */
+* {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+ */
+  user-select: none;         /* Стандарт */
+  -webkit-user-drag: none;   /* Запрещаем перетаскивание */
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* 🚫 Отключаем контекстное меню (ПКМ) для изображений */
+img {
+  pointer-events: none;
+}
