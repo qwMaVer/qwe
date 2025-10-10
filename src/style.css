@@ -840,3 +840,50 @@
 img {
   pointer-events: none;
 }
+/* === 🔧 Масштабирование и адаптация под экраны === */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  touch-action: manipulation; /* Отключаем pinch-zoom и двойное увеличение */
+}
+
+/* Масштаб под экран — подгоняет дизайн из Figma под любое устройство */
+.android-compact {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  transform-origin: top left;
+  transform: scale(calc(min(100vw / 422, 100vh / 655)));
+}
+
+/* 🚫 Защита от копирования, выделения и перетаскивания */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none; /* Запрещаем контекстное меню */
+}
+
+img {
+  pointer-events: none;
+}
+
+/* 🚫 Отключаем масштабирование на мобильных */
+@viewport {
+  zoom: 1.0;
+  min-zoom: 1.0;
+  max-zoom: 1.0;
+  user-zoom: fixed;
+}
+
+@media (max-width: 400px) {
+  .android-compact {
+    transform: scale(0.9);
+  }
+}
