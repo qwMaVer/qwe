@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && scp -r dist/* root@194.58.114.101:/var/www/myapp/"
   },
   "dependencies": {
     "framer-motion": "^12.23.22",
@@ -25,6 +26,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.4.0",
+    "scp-deploy": "^2.0.3",
     "vite": "^7.1.7"
   }
 }
