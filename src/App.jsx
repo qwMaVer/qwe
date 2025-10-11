@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AndroidCompact from "./MENU"; // главная страница
+import AndroidCompact from "./pages/MENU"; // главная страница
 import Game1 from "./pages/Game1"; // игра 1
 
 function App() {
