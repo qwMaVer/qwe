@@ -48,7 +48,7 @@ import rectangle83 from "./Rectangle 23.png";
 import rectangle84 from "./Rectangle 23.png";
 import rectangle85 from "./Rectangle 23.png";
 import rectangle86 from "./Rectangle 23.png";
-import "./Game1.css";
+import "../pagescss/Game1.css";
 import vector10 from "./Vector 10.svg";
 import vector11 from "./Vector 11.svg";
 import vector12 from "./Vector 12.svg";
