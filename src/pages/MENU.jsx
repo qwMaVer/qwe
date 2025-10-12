@@ -82,8 +82,6 @@ import vector7 from "./Vector 7.png";
 import vector8 from "./Vector 8.svg";
 import vector9 from "./Vector 9.svg";
 
-import { Link } from "react-router-dom";
-
 export const AndroidCompact = () => {
   return (
     <div className="android-compact">
