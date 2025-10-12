@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MENU from "../pages/MENU.jsx"; // главная страница
-import Game1 from "../pages/Game1.jsx"; // игра 1
+import MENU from "./pages/MENU.jsx";
+import Game1 from "./pages/Game1.jsx"; // игра 1
 
 function App() {
   return (

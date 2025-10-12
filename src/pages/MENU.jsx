@@ -634,3 +634,4 @@ export const AndroidCompact = () => {
     </div>
   );
 };
+export default AndroidCompact;

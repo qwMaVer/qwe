@@ -1,15 +1,15 @@
 import React from "react";
 import a21160a38fd6ee993638e3a88926ba1 from "./10a21160a38fd6ee993638e3a88926ba1.png";
 import a21160a38fd6ee993638e3a88926ba2 from "./10a21160a38fd6ee993638e3a88926ba2.png";
-import E4F9Ab526Eea6F8Ec862D57E3Cabb1 from "./30063-220e4f9ab526eea6f8ec862d57e3cabb.gif";
-import E4F9Ab526Eea6F8Ec862D57E3Cabb2 from "./30063-220e4f9ab526eea6f8ec862d57e3cabb.gif";
-import E4F9Ab526Eea6F8Ec862D57E3Cabb3 from "./30063-220e4f9ab526eea6f8ec862d57e3cabb.gif";
-import E4F9Ab526Eea6F8Ec862D57E3Cabb4 from "./30063-220e4f9ab526eea6f8ec862d57e3cabb.gif";
-import E82Ec09F098Bf122Ec54Be6Ae51F57Cb1 from "./35266-e82ec09f098bf122ec54be6ae51f57cb.gif";
-import Df054Ce092A303Ebdf0D28B7931 from "./43816-727676df054ce092a303ebdf0d28b793.gif";
-import D306A9083775C1482E866D964Eeb2E1 from "./43817-51d306a9083775c1482e866d964eeb2e.gif";
-import A183Afeb7Ebc50E2Df285D4B58E6451 from "./43818-09a183afeb7ebc50e2df285d4b58e645.gif";
-import F0774E0909A3C8457494Cf5865C5D0731 from "./43820-f0774e0909a3c8457494cf5865c5d073.gif";
+import E4F9Ab526Eea6F8Ec862D57E3Cabb1 from "./30063_220e4f9ab526eea6f8ec862d57e3cabb.gif";
+import E4F9Ab526Eea6F8Ec862D57E3Cabb2 from "./30063_220e4f9ab526eea6f8ec862d57e3cabb.gif";
+import E4F9Ab526Eea6F8Ec862D57E3Cabb3 from "./30063_220e4f9ab526eea6f8ec862d57e3cabb.gif";
+import E4F9Ab526Eea6F8Ec862D57E3Cabb4 from "./30063_220e4f9ab526eea6f8ec862d57e3cabb.gif";
+import E82Ec09F098Bf122Ec54Be6Ae51F57Cb1 from "./35266_e82ec09f098bf122ec54be6ae51f57cb.gif";
+import Df054Ce092A303Ebdf0D28B7931 from "./43816_727676df054ce092a303ebdf0d28b793.gif";
+import D306A9083775C1482E866D964Eeb2E1 from "./43817_51d306a9083775c1482e866d964eeb2e.gif";
+import A183Afeb7Ebc50E2Df285D4B58E6451 from "./43818_09a183afeb7ebc50e2df285d4b58e645.gif";
+import F0774E0909A3C8457494Cf5865C5D0731 from "./43820_f0774e0909a3c8457494cf5865c5d073.gif";
 import airbrushImageEnhancer1759425871700Photoroom2 from "./Airbrush-Image-Enhancer-1759422993219-Photoroom.png";
 import airbrushImageEnhancer1759425871700Photoroom3 from "./Airbrush-Image-Enhancer-1759422993219-Photoroom.png";
 import airbrushImageEnhancer1759425871700Photoroom4 from "./Airbrush-Image-Enhancer-1759422993219-Photoroom.png";
@@ -18,7 +18,7 @@ import dd14f3243d1271f674d2160ed952ee93Photoroom21 from "./dd14f3243d1271f674d21
 import dd14f3243d1271f674d2160ed952ee93Photoroom22 from "./dd14f3243d1271f674d2160ed952ee93-Photoroom 2.png";
 import ellipse2 from "./Ellipse 1.png";
 import fc503b86e91981e1ed6a7c449eee2b58XDesignPhotoroom3 from "./fc503b86e91981e1ed6a7c449eee2b58_X-Design-Photoroom.png";
-import image from "./image.png";
+
 import maskGroup from "./Mask group.png";
 import matveyG from "./Matvey G..png";
 import phocaThumbLUzor226Photoroom2 from "./phoca_thumb_l_uzor-226-Photoroom.png";
@@ -60,7 +60,7 @@ export const AndroidCompact = () => {
 
       <div className="rectangle" />
 
-      <img className="img" alt="Img" src={a21160a38fd6ee993638e3a88926ba2} />
+      
 
       <img className="img-2" alt="Img" src={a21160a38fd6ee993638e3a88926ba1} />
 
@@ -287,3 +287,4 @@ export const AndroidCompact = () => {
   );
 };
 
+export default AndroidCompact;
