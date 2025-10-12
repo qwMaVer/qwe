@@ -1,6 +1,6 @@
 import React from "react";
-import a21160a38fd6ee993638e3a88926ba1 from "10a21160a38fd6ee993638e3a88926ba 1.png";
-import a21160a38fd6ee993638e3a88926ba2 from "10a21160a38fd6ee993638e3a88926ba 2.png";
+import a21160a38fd6ee993638e3a88926ba1 from "./10a21160a38fd6ee993638e3a88926ba1.png";
+import a21160a38fd6ee993638e3a88926ba2 from "./10a21160a38fd6ee993638e3a88926ba2.png";
 import E4F9Ab526Eea6F8Ec862D57E3Cabb1 from "./30063-220e4f9ab526eea6f8ec862d57e3cabb.gif";
 import E4F9Ab526Eea6F8Ec862D57E3Cabb2 from "./30063-220e4f9ab526eea6f8ec862d57e3cabb.gif";
 import E4F9Ab526Eea6F8Ec862D57E3Cabb3 from "./30063-220e4f9ab526eea6f8ec862d57e3cabb.gif";
@@ -14,8 +14,8 @@ import airbrushImageEnhancer1759425871700Photoroom2 from "./Airbrush-Image-Enhan
 import airbrushImageEnhancer1759425871700Photoroom3 from "./Airbrush-Image-Enhancer-1759422993219-Photoroom.png";
 import airbrushImageEnhancer1759425871700Photoroom4 from "./Airbrush-Image-Enhancer-1759422993219-Photoroom.png";
 import black1 from "./Black.png";
-import dd14f3243d1271f674d2160ed952ee93Photoroom21 from "dd14f3243d1271f674d2160ed952ee93-Photoroom 2.png";
-import dd14f3243d1271f674d2160ed952ee93Photoroom22 from "dd14f3243d1271f674d2160ed952ee93-Photoroom 2.png";
+import dd14f3243d1271f674d2160ed952ee93Photoroom21 from "./dd14f3243d1271f674d2160ed952ee93-Photoroom 2.png";
+import dd14f3243d1271f674d2160ed952ee93Photoroom22 from "./dd14f3243d1271f674d2160ed952ee93-Photoroom 2.png";
 import ellipse2 from "./Ellipse 1.png";
 import fc503b86e91981e1ed6a7c449eee2b58XDesignPhotoroom3 from "./fc503b86e91981e1ed6a7c449eee2b58_X-Design-Photoroom.png";
 import image from "./image.png";
