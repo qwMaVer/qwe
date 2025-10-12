@@ -1,4 +1,6 @@
 import "../pagescss/MENU.css";
+
+
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -71,7 +73,7 @@ import fc503b86e91981e1ed6a7c449eee2b58XDesignPhotoroom2 from "./fc503b86e91981e
 import matveyG from "./Matvey G..png";
 import phocaThumbLUzor226Photoroom1 from "./phoca_thumb_l_uzor-226-Photoroom.png";
 import rectangle10 from "./Rectangle 10.png";
-import "./MENU.css";
+
 import vector1 from "./Vector 1.svg";
 import vector2 from "./Vector 2.svg";
 import vector3 from "./Vector 3.svg";
@@ -81,6 +83,7 @@ import vector6 from "./Vector 6.svg";
 import vector7 from "./Vector 7.png";
 import vector8 from "./Vector 8.svg";
 import vector9 from "./Vector 9.svg";
+
 
 export const AndroidCompact = () => {
   return (
