@@ -823,34 +823,32 @@
   top: 23px;
   white-space: nowrap;
 }
-/* 🚫 Запрещаем выделение текста и перетаскивание изображений */
+
 * {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE10+ */
-  user-select: none;         /* Стандарт */
-  -webkit-user-drag: none;   /* Запрещаем перетаскивание */
+  -webkit-user-select: none; 
+  -moz-user-select: none;    
+  -ms-user-select: none;     
+  user-select: none;        
+  -webkit-user-drag: none;  
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
 }
 
-/* 🚫 Отключаем контекстное меню (ПКМ) для изображений */
+
 img {
   pointer-events: none;
 }
-/* === 🔧 Масштабирование и адаптация под экраны === */
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  touch-action: manipulation; /* Отключаем pinch-zoom и двойное увеличение */
+  touch-action: manipulation; 
 }
-
-/* Масштаб под экран — подгоняет дизайн из Figma под любое устройство */
 .android-compact {
   position: relative;
   width: 100vw;
@@ -859,7 +857,7 @@ html, body {
   transform: scale(calc(min(100vw / 422, 100vh / 655)));
 }
 
-/* 🚫 Защита от копирования, выделения и перетаскивания */
+
 * {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -867,14 +865,13 @@ html, body {
   user-select: none;
   -webkit-user-drag: none;
   user-drag: none;
-  -webkit-touch-callout: none; /* Запрещаем контекстное меню */
+  -webkit-touch-callout: none; 
 }
 
 img {
   pointer-events: none;
 }
 
-/* 🚫 Отключаем масштабирование на мобильных */
 @viewport {
   zoom: 1.0;
   min-zoom: 1.0;
